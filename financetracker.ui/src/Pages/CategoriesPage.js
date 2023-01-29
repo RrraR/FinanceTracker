@@ -276,7 +276,7 @@ function CategoriesPage() {
 
                 <Row style={{height: 45}} className="mt-2">
 
-                    <Col className="square me-2 border-0 bg-transparent">
+                    <Col style={{height: 45}} className="square me-2 border-0 bg-transparent">
                         {incomeFields.map(
                             c => (
                                 <div key={c.id} className="d-flex h-100 flex-row">

@@ -64,7 +64,7 @@ function ScheduledPaymentsPage() {
     const [modalDataAmount, setModalDataAmount] = useState('0');
     const [modalDataCategory, setModalDataCategory] = useState('');
     const [modalDataName, setModalDataName] = useState('');
-    
+
     const [modalDataPeriodType, setModalDataPeriodType] = useState('');
 
     const dateToDisplay = moment.utc(modalDataDate, 'YYYY-MM-DD').toDate().toDateString();
@@ -232,12 +232,42 @@ function ScheduledPaymentsPage() {
         setModalType('Add')
         setModalDataCategory(userCategoriesData[0].categoryName)
         setModalDataPeriodType(periodTypes[0].type)
-        
+
         const myDate = moment.utc(new Date, 'YYYY-MM-DD').toDate();
         setModalDataDate(myDate)
         openModal()
     }
 
+
+    function getDate(date, periodType) {
+        let newDate = moment.utc(date, 'YYYY-MM-DD').toDate()
+        let returnDate = new Date()
+        const format = "YYYY-MM-DD"
+
+        switch (periodType) {
+            case 'Daily':
+                returnDate = new Date(newDate.setDate(newDate.getDate() + 1))
+                break
+            case 'Weekly':
+                returnDate = new Date(newDate.setDate(newDate.getDate() + 7))
+                break
+            case 'Monthly':
+                returnDate = new Date(newDate.setMonth(newDate.getMonth() + 1));
+                break
+            case 'Yearly':
+                returnDate = new Date(newDate.setFullYear(newDate.getFullYear() + 1));
+                break
+        }
+
+        returnDate = moment(returnDate).format(format);
+
+        return (
+            <h5 className="m-0">
+                {returnDate.toString()}
+
+            </h5>
+        )
+    }
 
     return (
         <>
@@ -427,40 +457,57 @@ function ScheduledPaymentsPage() {
 
             <Header></Header>
 
-            <Container className="mt-5">
-                <Row>
-                    <Button
-                        className="square me-2 rounded-4 bg-transparent text-black border border-2 border-info"
-                        onClick={addHandler}>
-                        Add New Payment
-                    </Button>
-
-                    <Col className="square me-2 border-0 bg-transparent">
-                        {/*1 of 3*/}
-                        <div className="d-flex w-75 align-items-center justify-content-between text-center">
-                            <h6 className="m-0">
-                                Payment Type
-                            </h6>
-                            <h6 className="m-0">
-                                Name
-                            </h6>
-                            <h6 className="m-0">
-                                Category
-                            </h6>
-                            <h6 className="m-0">
-                                Amount
-                            </h6>
-                            <h6 className="m-0">
-                                Date
-                            </h6>
-                            <h6 className=" m-0">
-                                Type
-                            </h6>
+            <Container style={{height: 45}} className="mt-5">
+                
+                <Row style={{height: 45}} className="w-100 ">
+                    <Col style={{height: 45}} className="w-100 d-flex flex-fill">
+                        <div className="d-flex flex-fill justify-content-center">
+                            <Button
+                                className="square me-2 rounded-4 bg-transparent text-black text-center border border-2 border-info"
+                                onClick={addHandler}>
+                                Add New Payment
+                            </Button>
                         </div>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
+
+                <Row style={{height: 25}}>
+                    <Col style={{height: 25}} className="square border-0 bg-transparent">
+                        {/*1 of 3*/}
+                        <div className="d-flex h-100 flex-row">
+                            <div className="d-flex w-100 align-items-center justify-content-between text-center">
+                                <div className="m-0">
+                                    Payment Type
+                                </div>
+                                <div className="m-0">
+                                    Name
+                                </div>
+                                <div className="m-0">
+                                    Category
+                                </div>
+                                <div className="m-0">
+                                    Amount
+                                </div>
+                                <div className="m-0">
+                                    Latest Payment
+                                </div>
+                                <div className="m-0">
+                                    Next Payment
+                                </div>
+                                <div className="m-0">
+                                    Type
+                                </div>
+                            </div>
+
+                            <div className="w-25">
+
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+
+                <Row style={{height: 45}}>
+                    <Col style={{height: 45}}>
                         {uniquePayments.map(p => (
                             <div key={p.id} className="d-flex h-100 flex-row">
                                 <div className="d-flex w-100 align-items-center justify-content-between text-center">
@@ -479,6 +526,37 @@ function ScheduledPaymentsPage() {
                                     <h5 className="m-0">
                                         {p.date}
                                     </h5>
+
+
+                                    {getDate(p.date, p.periodType)}
+
+                                    {/*{(() => {*/}
+                                    {/*    switch (p.periodType) {*/}
+                                    {/*        case 'Daily':*/}
+                                    {/*            return <h5 className="m-0">*/}
+                                    {/*                {*/}
+                                    {/*                    getDate(p.date)*/}
+                                    {/*                }*/}
+                                    {/*                Daily*/}
+                                    {/*            </h5>*/}
+                                    {/*        case 'Weekly':*/}
+                                    {/*            return <h5 className="m-0">*/}
+                                    {/*                Weekly*/}
+                                    {/*            </h5>*/}
+                                    {/*        case 'Monthly':*/}
+                                    {/*            return <h5 className="m-0">*/}
+                                    {/*                Monthly*/}
+                                    {/*            </h5>*/}
+                                    {/*        case 'Yearly':*/}
+                                    {/*            return <h5 className="m-0">*/}
+                                    {/*                Yearly*/}
+                                    {/*            </h5>*/}
+                                    {/*        default:*/}
+                                    {/*            return null*/}
+                                    {/*    }*/}
+                                    {/*})()}*/}
+
+
                                     <h5 className="m-0">
                                         {p.periodType}
                                     </h5>
@@ -502,75 +580,6 @@ function ScheduledPaymentsPage() {
                 </Row>
             </Container>
         </>
-        // <>
-        //     <Header></Header>
-        //     {/*<Button onClick={() => {*/}
-        //     {/*    console.log(uniquePayments)*/}
-        //     {/*}}>uniquePayments</Button>*/}
-        //
-        //     <Container>
-        //         <Row>
-        //             <Col className="square me-2 border-0 bg-transparent">
-        //                 {/*1 of 3*/}
-        //                 <div className="d-flex w-75 align-items-center justify-content-between text-center">
-        //                     <h6 className="m-0">
-        //                         Name
-        //                     </h6>
-        //                     <h6 className="m-0">
-        //                         Category
-        //                     </h6>
-        //                     <h6 className="m-0">
-        //                         Amount
-        //                     </h6>
-        //                     <h6 className="m-0">
-        //                         Date
-        //                     </h6>
-        //                     <h6 className=" m-0">
-        //                         Type
-        //                     </h6>
-        //                 </div>
-        //             </Col>
-        //         </Row>
-        //         <Row>
-        //             <Col>
-        //                 {uniquePayments.map(p => (
-        //                     <div key={p.id} className="d-flex h-100 flex-row">
-        //                         <div className="d-flex w-100 align-items-center justify-content-between text-center">
-        //                             <h5 className="m-0">
-        //                                 {p.name}
-        //                             </h5>
-        //                             <h5 className="m-0">
-        //                                 {p.categoryName}
-        //                             </h5>
-        //                             <h5 className="m-0">
-        //                                 {p.amount}$
-        //                             </h5>
-        //                             <h5 className="m-0">
-        //                                 {p.date}
-        //                             </h5>
-        //                             <h5 className="m-0">
-        //                                 {p.periodType}
-        //                             </h5>
-        //                         </div>
-        //
-        //                         <div className="d-flex w-25 flex-fill align-items-center text-center">
-        //                             <p className="w-50 m-0">
-        //                                 <FontAwesomeIcon
-        //                                     // onClick={() => editHandler(c.categoryName, c.amount, c.date, c.name)} 
-        //                                     icon={faPen}/>
-        //                             </p>
-        //                             <p className="w-50 m-0">
-        //                                 <FontAwesomeIcon
-        //                                     // onClick={() => deleteHandler(c.categoryName, c.amount, c.date, c.name)}
-        //                                     icon={faTrash}/>
-        //                             </p>
-        //                         </div>
-        //                     </div>
-        //                 ))}
-        //             </Col>
-        //         </Row>
-        //     </Container>
-        // </>
     )
 }
 

@@ -185,6 +185,36 @@ export default function TrackerPage() {
     const pieDataAmount = expenseData.map((item) => item.amount);
     const pieDataLabels = expenseData.map((item) => item.categoryName);
 
+    function getDate(date, periodType) {
+        let newDate = moment.utc(date, 'YYYY-MM-DD').toDate()
+        let returnDate = new Date()
+        const format = "YYYY-MM-DD"
+
+        switch (periodType) {
+            case 'Daily':
+                returnDate = new Date(newDate.setDate(newDate.getDate() + 1))
+                break
+            case 'Weekly':
+                returnDate = new Date(newDate.setDate(newDate.getDate() + 7))
+                break
+            case 'Monthly':
+                returnDate = new Date(newDate.setMonth(newDate.getMonth() + 1));
+                break
+            case 'Yearly':
+                returnDate = new Date(newDate.setFullYear(newDate.getFullYear() + 1));
+                break
+        }
+
+        returnDate = moment(returnDate).format(format);
+
+        return (
+            <h6 className="d-flex w-25 flex-fill m-0">
+                {returnDate.toString()}
+            </h6>
+        )
+    }
+    
+    
     const lineData = {
         series: [
             {
@@ -394,9 +424,12 @@ export default function TrackerPage() {
                                 </Col>
 
                                 <Col className="square me-2 bg-transparent rounded-4 border border-2 border-info">
-                                    <h5 className="mb-2">Scheduled payments</h5>
+                                    <h5 className="mb-2">Scheduled Payments And Subscriptions</h5>
 
                                     <div className="d-flex w-100 mb-2 align-items-center text-center">
+                                        <div className="d-flex w-25 flex-fill m-0">
+                                            Type
+                                        </div>
                                         <div className="d-flex w-25 flex-fill m-0">
                                             Name
                                         </div>
@@ -404,27 +437,23 @@ export default function TrackerPage() {
                                             Amount
                                         </div>
                                         <div className="d-flex w-25 flex-fill m-0">
-                                            Date
-                                        </div>
-                                        <div className="d-flex w-25 flex-fill m-0">
-                                            Type
+                                            Next Payment
                                         </div>
                                     </div>
 
                                     {scheduledPayments.map(t => (
                                         <div key={t.id} className="d-flex mt-2 w-100 align-items-center text-center">
                                             <h6 className="d-flex w-25 flex-fill m-0">
+                                                {t.categoryType}
+                                            </h6>
+                                            <h6 className="d-flex w-25 flex-fill m-0">
                                                 {t.name}
                                             </h6>
                                             <h6 className="d-flex w-25 flex-fill m-0">
                                                 {t.amount}$
                                             </h6>
-                                            <h6 className="d-flex w-25 flex-fill m-0">
-                                                {t.date}
-                                            </h6>
-                                            <h6 className="d-flex w-25 flex-fill m-0">
-                                                {t.periodType}
-                                            </h6>
+
+                                            {getDate(t.date, t.periodType)}
                                         </div>
                                     ))}
 

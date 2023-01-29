@@ -23,7 +23,6 @@ const customStyles = {
 };
 
 function TransactionsPage() {
-    const periodTypes = ['Daily', 'Weekly','Monthly', 'Yearly']
     
     const [userTransactionsData, setUserTransactionsData] = useState([]);
     const [userCategoriesData, setUserCategoriesData] = useState([]);
@@ -35,11 +34,6 @@ function TransactionsPage() {
     const [modalDataAmount, setModalDataAmount] = useState('0');
     const [modalDataCategory, setModalDataCategory] = useState('');
     const [modalDataName, setModalDataName] = useState('');
-    
-    const [modalDataIsPeriodic, serModalDataIsPeriodic] = useState(false);
-    const [modalDataPeriodType, setModalDataPeriodType] = useState('');
-
-
 
     const dateToDisplay = moment.utc(modalDataDate, 'YYYY-MM-DD').toDate().toDateString();
 
@@ -431,8 +425,8 @@ function TransactionsPage() {
                 </Row>
 
 
-                <Row className="mt-2">
-                    <Col className="square me-2 border-0 bg-transparent">
+                <Row style={{height: 15}}  className="mt-2">
+                    <Col style={{height: 15}}  className="square me-2 border-0 bg-transparent">
                         {/*1 of 3*/}
 
                         <div className="d-flex flex-fill w-75 align-items-center">
@@ -451,7 +445,7 @@ function TransactionsPage() {
                         </div>
                     </Col>
 
-                    <Col className="square me-2 border-0 bg-transparent">
+                    <Col style={{height: 15}} className="square me-2 border-0 bg-transparent">
                         {/*1 of 3*/}
                         <div className="d-flex flex-fill w-75 align-items-center">
                             <h6 className="w-25 m-0">
@@ -471,9 +465,9 @@ function TransactionsPage() {
                 </Row>
 
 
-                <Row className="mt-2">
+                <Row style={{height: 45}}  className="mt-2">
 
-                    <Col className="square me-2 border-0 bg-transparent">
+                    <Col style={{height: 45}}  className="square me-2 border-0 bg-transparent">
                         {incomeTransactions.map(
                             c => (
                                 <div key={c.id} className="d-flex h-100 flex-row">
@@ -509,7 +503,7 @@ function TransactionsPage() {
                         }
                     </Col>
 
-                    <Col className="square me-2 border-0 bg-transparent">
+                    <Col style={{height: 45}}  className="square me-2 border-0 bg-transparent">
                         {expensesTransactions.map(
                             c => (
                                 <div key={c.id} className="d-flex h-100 flex-row">
