@@ -1,6 +1,6 @@
-﻿namespace FinanceTracker.Services.Models;
+﻿namespace FinanceTracker.Services.Objects;
 
-public class CategoryToDeleteDto
+public class CategoryToDeleteObject
 {
     public string Username { get; set; }
     public string CategoryName { get; set; }

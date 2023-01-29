@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FinanceTracker.Data.Repositories.Interfaces;
-using FinanceTracker.Services.Models;
+using FinanceTracker.Services.Objects;
 using FinanceTracker.Services.Services.Interfaces;
 
 namespace FinanceTracker.Services.Services;
@@ -20,7 +20,7 @@ public class UserService:IUserService
     public async Task<bool> GetUser(string username, string password)
     {
         var user = await _userRepository.GetUser(username, password);
-        // return _autoMapper.Map<UserDto>(user);
+        // return _autoMapper.Map<UserObject>(user);
         if (user == null)
         {
             return false;
@@ -45,13 +45,13 @@ public class UserService:IUserService
     //     return userName == "admin" ? UserRoles.Admin : UserRoles.BasicUser;
     // }
 
-    public async Task<UserDto> RegisterUser(string username, string password)
+    public async Task<UserObject> RegisterUser(string username, string password)
     {
         var user = await _userRepository.RegisterUser(username, password);
 
         if (!IsAnExistingUser(user.Username).Result) return null;
         
         // var user = await _userRepository.GetUser(username, password);
-        return _autoMapper.Map<UserDto>(user);
+        return _autoMapper.Map<UserObject>(user);
     }
 }

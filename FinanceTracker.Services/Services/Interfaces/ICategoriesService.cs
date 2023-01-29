@@ -1,11 +1,11 @@
-﻿using FinanceTracker.Services.Models;
+﻿using FinanceTracker.Services.Objects;
 
 namespace FinanceTracker.Services.Services.Interfaces;
 
 public interface ICategoriesService
 {
-    public Task<ICollection<CategoriesDto>> GetCategoriesByUser(string Username);
-    public Task<ICollection<CategoriesDto>> UpdateCategory(CategoryToUpdateDto data);
-    public Task<ICollection<CategoriesDto>> DeleteCategory(CategoryToDeleteDto data);
-    public Task<ICollection<CategoriesDto>> CreateCategory(CategoryToAddDto data);
+    public Task<ICollection<CategoriesObject>> GetCategoriesByUser(string Username);
+    public Task<ICollection<CategoriesObject>> UpdateCategory(CategoryToUpdateObject data);
+    public Task<ICollection<CategoriesObject>> DeleteCategory(CategoryToDeleteObject data);
+    public Task<ICollection<CategoriesObject>> CreateCategory(CategoryToAddObject data);
 }

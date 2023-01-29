@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FinanceTracker.Data.Repositories.Interfaces;
-using FinanceTracker.Services.Models;
+using FinanceTracker.Services.Objects;
 using FinanceTracker.Services.Services.Interfaces;
 
 namespace FinanceTracker.Services.Services;
@@ -20,31 +20,31 @@ public class CategoriesService : ICategoriesService
     }
 
 
-    public async Task<ICollection<CategoriesDto>> GetCategoriesByUser(string Username)
+    public async Task<ICollection<CategoriesObject>> GetCategoriesByUser(string Username)
     {
         var user = await _userRepository.GetUser(Username, string.Empty);
         var res = await _categoriesRepository.GetCategoriesByUser(user.Id);
-        return _autoMapper.Map<ICollection<CategoriesDto>>(res);
+        return _autoMapper.Map<ICollection<CategoriesObject>>(res);
     }
 
-    public async Task<ICollection<CategoriesDto>> UpdateCategory(CategoryToUpdateDto data)
+    public async Task<ICollection<CategoriesObject>> UpdateCategory(CategoryToUpdateObject data)
     {
         var user = await _userRepository.GetUser(data.Username, string.Empty);
         var res = await _categoriesRepository.UpdateCategory(user.Id, data.OldValue, data.NewValue);
-        return _autoMapper.Map<ICollection<CategoriesDto>>(res);
+        return _autoMapper.Map<ICollection<CategoriesObject>>(res);
     }
 
-    public async Task<ICollection<CategoriesDto>> DeleteCategory(CategoryToDeleteDto data)
+    public async Task<ICollection<CategoriesObject>> DeleteCategory(CategoryToDeleteObject data)
     {
         var user = await _userRepository.GetUser(data.Username, string.Empty);
         var res = await _categoriesRepository.DeleteCategory(user.Id, data.CategoryName);
-        return _autoMapper.Map<ICollection<CategoriesDto>>(res);
+        return _autoMapper.Map<ICollection<CategoriesObject>>(res);
     }
 
-    public async Task<ICollection<CategoriesDto>> CreateCategory(CategoryToAddDto data)
+    public async Task<ICollection<CategoriesObject>> CreateCategory(CategoryToAddObject data)
     {
         var user = await _userRepository.GetUser(data.Username, string.Empty);
         var res = await _categoriesRepository.CreateCategory(user.Id, data.CategoryName, data.CategoryType);
-        return _autoMapper.Map<ICollection<CategoriesDto>>(res);
+        return _autoMapper.Map<ICollection<CategoriesObject>>(res);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FinanceTracker.Services.Models;
+namespace FinanceTracker.Models;
 
 public class TransactionsDto
 {

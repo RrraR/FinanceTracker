@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FinanceTracker.Services.Models;
+using AutoMapper;
+using FinanceTracker.Models;
+using FinanceTracker.Services.Objects;
 using FinanceTracker.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,42 +16,45 @@ namespace FinanceTracker.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly ITransactionsService _transactionsService;
+        private readonly IMapper _autoMapper;
 
-        public TransactionsController(ITransactionsService transactionsService)
+
+        public TransactionsController(ITransactionsService transactionsService, IMapper autoMapper)
         {
             _transactionsService = transactionsService;
+            _autoMapper = autoMapper;
         }
 
         [HttpPost]
-        public async Task<ICollection<TransactionsDto>> GetTransactions([FromBody] UsernameDto request)
+        public async Task<ICollection<TransactionsObject>> GetTransactions([FromBody] UsernameDto request)
         {
             var temp = await _transactionsService.GetTransactionsByUser(request.Username);
             return temp;
         }
 
         [HttpPut]
-        public async Task<ICollection<TransactionsDto>> UpdateTransaction([FromBody] TransactionToUpdateDto data)
+        public async Task<ICollection<TransactionsObject>> UpdateTransaction([FromBody] TransactionToUpdateDto data)
         {
-            return await _transactionsService.UpdateTransaction(data);
+            return await _transactionsService.UpdateTransaction(_autoMapper.Map<TransactionToUpdateObject>(data));
         }
 
         [HttpPost("delete")]
-        public async Task<ICollection<TransactionsDto>> DeleteTransaction([FromBody] TransactionToDeleteDto data)
+        public async Task<ICollection<TransactionsObject>> DeleteTransaction([FromBody] TransactionToDeleteDto data)
         {
-            var temp = await _transactionsService.DeleteTransaction(data);
+            var temp = await _transactionsService.DeleteTransaction(_autoMapper.Map<TransactionToDeleteObject>(data));
             return temp;
         }
 
         [HttpPost("create")]
-        public async Task<ICollection<TransactionsDto>> AddTransaction([FromBody] TransactionToAddDto data)
+        public async Task<ICollection<TransactionsObject>> AddTransaction([FromBody] TransactionToAddDto data)
         {
-            return await _transactionsService.AddTransaction(data);
+            return await _transactionsService.AddTransaction(_autoMapper.Map<TransactionToAddObject>(data));
         }
 
         [HttpPost("deleteScheduled")]
-        public async Task<ICollection<TransactionsDto>> ModifyScheduledTransactions([FromBody] TransactionToDeleteDto data)
+        public async Task<ICollection<TransactionsObject>> ModifyScheduledTransactions([FromBody] TransactionToDeleteDto data)
         {
-            return await _transactionsService.ModifyScheduledTransactions(data);
+            return await _transactionsService.ModifyScheduledTransactions(_autoMapper.Map<TransactionToDeleteObject>(data));
         }
     }
 }

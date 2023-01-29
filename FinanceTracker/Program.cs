@@ -3,7 +3,7 @@ using FinanceTracker.Authentication;
 using FinanceTracker.Data;
 using FinanceTracker.Data.Repositories;
 using FinanceTracker.Data.Repositories.Interfaces;
-using FinanceTracker.Services.Models;
+using FinanceTracker.Services.Objects;
 using FinanceTracker.Services.Services;
 using FinanceTracker.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

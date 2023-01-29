@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using FinanceTracker.Authentication;
 using FinanceTracker.Models;
-using FinanceTracker.Services.Models;
+using FinanceTracker.Services.Objects;
 using FinanceTracker.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +44,7 @@ namespace FinanceTracker.Controllers
 
             var jwtResult = _jwtAuthManager.GenerateTokens(request.Username, claims, DateTime.Now);
             
-            return Ok(new AuthResultDto
+            return Ok(new AuthResultObject
             {
                 Username = request.Username,
                 // Role = role.Result,
@@ -78,7 +78,7 @@ namespace FinanceTracker.Controllers
 
             var jwtResult = _jwtAuthManager.GenerateTokens(user.Username, claims, DateTime.Now);
             
-            return Ok(new AuthResultDto
+            return Ok(new AuthResultObject
             {
                 Username = user.Username,
                 // Role = role.Result,

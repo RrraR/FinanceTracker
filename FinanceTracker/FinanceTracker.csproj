@@ -36,8 +36,4 @@
       <ProjectReference Include="..\FinanceTracker.Services\FinanceTracker.Services.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="ViewModels" />
-    </ItemGroup>
-
 </Project>

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FinanceTracker.Data.Entities;
-using FinanceTracker.Services.Models;
+using FinanceTracker.Services.Objects;
 
 namespace FinanceTracker;
 
@@ -8,13 +8,13 @@ public class AutoMapper : Profile
 {
     public AutoMapper()
     {
-        CreateMap<User, UserDto>()
+        CreateMap<User, UserObject>()
             .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
             .ForMember(d => d.Username, o => o.MapFrom(s => s.Username))
             .ForMember(d => d.Password, o => o.MapFrom(s => s.Password));
 
 
-        CreateMap<Transaction, TransactionsDto>()
+        CreateMap<Transaction, TransactionsObject>()
             .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
             .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Title))
             .ForMember(d => d.CategoryType, o => o.MapFrom(s => s.Category.Type))
@@ -24,7 +24,7 @@ public class AutoMapper : Profile
             .ForMember(d => d.PeriodType, o => o.MapFrom(s => s.PeriodType))
             .ForMember(d => d.Name, o => o.MapFrom(s => s.Name));
 
-        CreateMap<Category, CategoriesDto>()
+        CreateMap<Category, CategoriesObject>()
             .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
             .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Title))
             .ForMember(d => d.CategoryType, o => o.MapFrom(s => s.Type));

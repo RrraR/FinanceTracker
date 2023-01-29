@@ -1,4 +1,4 @@
-﻿namespace FinanceTracker.Services.Models;
+﻿namespace FinanceTracker.Models;
 
 public class UsernameDto
 {
