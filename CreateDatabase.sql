@@ -141,18 +141,19 @@ create table Transactions
     Id         int identity
         constraint PK_Transactions
             primary key,
-    CategoryId int                             not null
+    CategoryId int                               not null
         constraint FK_Transactions_Categories
             references Categories,
-    Amount     int          default 0          not null,
-    UserId     int                             not null
+    Amount     decimal(18, 2) default 0          not null,
+    UserId     int                               not null
         constraint FK_Transactions_Users
             references Users,
-    Date       date         default getdate()  not null,
-    IsPeriodic bit          default 0          not null,
-    PeriodType nvarchar(50) default 'one-time' not null,
-    Name       nvarchar(50)                    not null
+    Date       date           default getdate()  not null,
+    IsPeriodic bit            default 0          not null,
+    PeriodType nvarchar(50)   default 'one-time' not null,
+    Name       nvarchar(50)                      not null
 )
 go
+
 
 
