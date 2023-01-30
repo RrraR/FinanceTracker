@@ -1,6 +1,6 @@
 ﻿import React, {useEffect, useState} from "react"
 import api from "../api";
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import Chart from 'react-apexcharts'
 import {Link} from "react-router-dom";
@@ -28,13 +28,6 @@ export default function TrackerPage() {
     const [dates, setDates] = useState([])
 
     useEffect(() => {
-        setIncomeFields(userData.filter((item) => {
-            return item.categoryType === 'Income'
-        }))
-        setExpensesFields(userData.filter((item) => {
-            return item.categoryType === 'Expenses'
-        }))
-
         let dateNow = new Date()
         let month = dateNow.getMonth();
         let year = dateNow.getFullYear();
@@ -47,7 +40,16 @@ export default function TrackerPage() {
             date.setDate(date.getDate() + 1);
         }
         setDates(days)
-
+        
+        
+        setIncomeFields(userData.filter((item) => {
+            return item.categoryType === 'Income' && 
+                dates.includes(moment.utc(item.date, 'YYYY-MM-DD').toDate().toDateString())
+        }))
+        setExpensesFields(userData.filter((item) => {
+            return item.categoryType === 'Expenses' &&
+                dates.includes(moment.utc(item.date, 'YYYY-MM-DD').toDate().toDateString())
+        }))
 
     }, [userData])
 
@@ -62,7 +64,7 @@ export default function TrackerPage() {
                 findItem.amount += item.amount
             }
         });
-    
+
     const incomeChart = [];
     chartIncomeData.map((item) => {
         let temp =
@@ -75,26 +77,24 @@ export default function TrackerPage() {
 
     dates.map(
         (item) => {
-            
+
             let findItem = incomeChart.find(
                 (x) => moment.utc(x.date, 'YYYY-MM-DD').toDate().toDateString() === item
             );
-            
-            if (!findItem)
-            {
+
+            if (!findItem) {
                 incomeChart.push(
                     {
                         "date": item,
                         "amount": 0
                     }
                 );
-            }
-            else{
+            } else {
                 findItem.date = moment.utc(findItem.date, 'YYYY-MM-DD').toDate().toDateString()
             }
         });
 
-    incomeChart.sort(function(a, b) {
+    incomeChart.sort(function (a, b) {
         let keyA = new Date(a.date),
             keyB = new Date(b.date);
         // Compare the 2 dates
@@ -102,10 +102,10 @@ export default function TrackerPage() {
         if (keyA > keyB) return 1;
         return 0;
     });
-    
+
     const incomeChartAmount = incomeChart.map((item) => item.amount);
-    
-    
+
+
     const chartExpensesData = []
     expensesFields.map(
         (item) => {
@@ -134,21 +134,19 @@ export default function TrackerPage() {
                 (x) => moment.utc(x.date, 'YYYY-MM-DD').toDate().toDateString() === item
             );
 
-            if (!findItem)
-            {
+            if (!findItem) {
                 expensesChart.push(
                     {
                         "date": item,
                         "amount": 0
                     }
                 );
-            }
-            else{
+            } else {
                 findItem.date = moment.utc(findItem.date, 'YYYY-MM-DD').toDate().toDateString()
             }
         });
 
-    expensesChart.sort(function(a, b) {
+    expensesChart.sort(function (a, b) {
         let keyA = new Date(a.date),
             keyB = new Date(b.date);
         if (keyA < keyB) return -1;
@@ -157,9 +155,8 @@ export default function TrackerPage() {
     });
 
     const expensesChartAmount = expensesChart.map((item) => item.amount);
-    
-    
-    
+
+
     const totalIncome = incomeFields.reduce((a, c) => a + c.amount, 0)
     const totalExpenses = expensesFields.reduce((a, c) => a + c.amount, 0)
 
@@ -170,6 +167,7 @@ export default function TrackerPage() {
     const scheduledPayments = periodicPayments.slice(0, 5);
 
     const transactions = userData.slice(0, 5);
+
 
     const expenseData = [];
     expensesFields.map(
@@ -184,6 +182,7 @@ export default function TrackerPage() {
 
     const pieDataAmount = expenseData.map((item) => item.amount);
     const pieDataLabels = expenseData.map((item) => item.categoryName);
+
 
     function getDate(date, periodType) {
         let newDate = moment.utc(date, 'YYYY-MM-DD').toDate()
@@ -213,18 +212,19 @@ export default function TrackerPage() {
             </h6>
         )
     }
-    
-    
+
+
     const lineData = {
         series: [
             {
-                name: 'Income',
-                data: incomeChartAmount
-            },
-            {
                 name: 'Expenses',
                 data: expensesChartAmount
+            },
+            {
+                name: 'Income',
+                data: incomeChartAmount
             }
+
         ],
         options: {
             chart: {
@@ -306,6 +306,7 @@ export default function TrackerPage() {
     return (
         <>
             <Header></Header>
+
             <Container className="mt-5 mb-5">
                 <Row>
                     <Col xs={6} className="d-flex flex-fill">

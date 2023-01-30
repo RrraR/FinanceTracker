@@ -17,36 +17,40 @@ namespace FinanceTracker.Controllers
     {
         private readonly ICategoriesService _categoriesService;
         private readonly IMapper _autoMapper;
-        
+
         public CategoriesController(ICategoriesService categoriesService, IMapper autoMapper)
         {
             _categoriesService = categoriesService;
             _autoMapper = autoMapper;
         }
-        
+
         [HttpPost]
-        public async Task<ICollection<CategoriesObject>> GetCategories([FromBody] UsernameDto request)
+        public async Task<ICollection<CategoriesDto>> GetCategories([FromBody] UsernameDto request)
         {
-            return await _categoriesService.GetCategoriesByUser(request.Username);
+            var temp = await _categoriesService.GetCategoriesByUser(request.Username);
+            return _autoMapper.Map<ICollection<CategoriesDto>>(temp);
         }
 
         [HttpPut]
-        public async Task<ICollection<CategoriesObject>> UpdateCategory([FromBody] CategoryToUpdateDto data)
+        public async Task<ICollection<CategoriesDto>> UpdateCategory([FromBody] CategoryToUpdateDto data)
         {
-            return await _categoriesService.UpdateCategory(_autoMapper.Map<CategoryToUpdateObject>(data));
+            var temp = await _categoriesService.UpdateCategory(_autoMapper.Map<CategoryToUpdateObject>(data));
+            return _autoMapper.Map<ICollection<CategoriesDto>>(temp);
         }
-        
-        
+
+
         [HttpPost("delete")]
-        public async Task<ICollection<CategoriesObject>> DeleteCategory([FromBody] CategoryToDeleteDto data)
+        public async Task<ICollection<CategoriesDto>> DeleteCategory([FromBody] CategoryToDeleteDto data)
         {
-            return await _categoriesService.DeleteCategory(_autoMapper.Map<CategoryToDeleteObject>(data));
+            var temp = await _categoriesService.DeleteCategory(_autoMapper.Map<CategoryToDeleteObject>(data));
+            return _autoMapper.Map<ICollection<CategoriesDto>>(temp);
         }
-        
+
         [HttpPost("create")]
-        public async Task<ICollection<CategoriesObject>> CreateCategory([FromBody] CategoryToAddDto data)
+        public async Task<ICollection<CategoriesDto>> CreateCategory([FromBody] CategoryToAddDto data)
         {
-            return await _categoriesService.CreateCategory(_autoMapper.Map<CategoryToAddObject>(data));
+            var temp = await _categoriesService.CreateCategory(_autoMapper.Map<CategoryToAddObject>(data));
+            return _autoMapper.Map<ICollection<CategoriesDto>>(temp);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FinanceTracker.Data.Entities;
+using FinanceTracker.Models;
 using FinanceTracker.Services.Objects;
 
 namespace FinanceTracker;
@@ -29,7 +30,32 @@ public class AutoMapper : Profile
             .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Title))
             .ForMember(d => d.CategoryType, o => o.MapFrom(s => s.Type));
 
+        // TSource, TDestination
+        CreateMap<AuthRequestDto, AuthRequestObject>();
+        CreateMap<AuthResultDto, AuthResultObject>();
+        CreateMap<CategoriesDto, CategoriesObject>();
+        CreateMap<CategoryToAddDto, CategoryToAddObject>();
+        CreateMap<CategoryToDeleteDto, CategoryToDeleteObject>();
+        CreateMap<CategoryToUpdateDto, CategoryToUpdateObject>();
+        CreateMap<TransactionsDto, TransactionsObject>();
+        CreateMap<TransactionToAddDto, TransactionToAddObject>();
+        CreateMap<TransactionToDeleteDto, TransactionToDeleteObject>();
+        CreateMap<TransactionToUpdateDto, TransactionToUpdateObject>();
+        CreateMap<UserDto, UserObject>();
+        CreateMap<UsernameDto, UsernameObject>();
 
 
+        CreateMap<AuthRequestObject, AuthRequestDto>();
+        CreateMap<AuthResultObject, AuthResultDto>();
+        CreateMap<CategoriesObject, CategoriesDto>();
+        CreateMap<CategoryToAddObject, CategoryToAddDto>();
+        CreateMap<CategoryToDeleteObject, CategoryToDeleteDto>();
+        CreateMap<CategoryToUpdateObject, CategoryToUpdateDto>();
+        CreateMap<TransactionsObject, TransactionsDto>();
+        CreateMap<TransactionToAddObject, TransactionToAddDto>();
+        CreateMap<TransactionToDeleteObject, TransactionToDeleteDto>();
+        CreateMap<TransactionToUpdateObject, TransactionToUpdateDto>();
+        CreateMap<UserObject, UserDto>();
+        CreateMap<UsernameObject, UsernameDto>();
     }
 }

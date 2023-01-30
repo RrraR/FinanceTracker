@@ -40,7 +40,7 @@ public class TransactionsRepository : ITransactionsRepository
         return temp;
     }
 
-    public async Task<IList<Transaction>> DeleteTransaction(int UserId, string CategoryName, int Amount, DateTime Date,
+    public async Task<IList<Transaction>> DeleteTransaction(int UserId, string CategoryName, decimal Amount, DateTime Date,
         string Name)
     {
         var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Title == CategoryName);
@@ -56,7 +56,7 @@ public class TransactionsRepository : ITransactionsRepository
         return await GetTransactionsByUser(UserId);
     }
 
-    public async Task<IList<Transaction>> AddTransaction(int UserId, string CategoryName, DateTime Date, int Amount,
+    public async Task<IList<Transaction>> AddTransaction(int UserId, string CategoryName, DateTime Date, decimal Amount,
         bool IsPeriodic, string PeriodType, string Name)
     {
         var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Title == CategoryName);
@@ -77,7 +77,7 @@ public class TransactionsRepository : ITransactionsRepository
     }
 
     public async Task<IList<Transaction>> UpdateTransaction(int UserId, string OldName, string NewName,
-        string OldCategory, string NewCategory, int OldAmount, int NewAmount, DateTime OldDate, DateTime NewDate,
+        string OldCategory, string NewCategory, decimal OldAmount, decimal NewAmount, DateTime OldDate, DateTime NewDate,
         bool IsPeriodic, string PeriodType)
     {
         var OCategory = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Title == OldCategory);
@@ -115,7 +115,7 @@ public class TransactionsRepository : ITransactionsRepository
         return await GetTransactionsByUser(UserId);
     }
 
-    public async Task<IList<Transaction>> ModifyScheduledTransactions(int UserId, string CategoryName, int Amount, string name)
+    public async Task<IList<Transaction>> ModifyScheduledTransactions(int UserId, string CategoryName, decimal Amount, string name)
     {
         var category = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Title == CategoryName);
         

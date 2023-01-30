@@ -269,7 +269,7 @@ function TransactionsPage() {
                         />
 
                         <input
-                            type="text"
+                            type="number"
                             defaultValue={modalDataAmount}
                             placeholder="Amount"
                             // value={modalInputData}

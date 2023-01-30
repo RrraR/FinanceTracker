@@ -7,8 +7,8 @@ public class TransactionToUpdateObject
     public string NewName { get; set; }
     public string OldCategory { get; set; }
     public string NewCategory { get; set; }
-    public int OldAmount { get; set; }
-    public int NewAmount { get; set; }
+    public decimal OldAmount { get; set; }
+    public decimal NewAmount { get; set; }
     public DateTime OldDate { get; set; }
     public DateTime NewDate { get; set; }
     public bool IsPeriodic { get; set; }
