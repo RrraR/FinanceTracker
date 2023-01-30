@@ -9,7 +9,7 @@ Projects acts as a tracker for your expenses and incomes.
 1. Register or login
 2. If new user is registered they will need to create their own income/expenses categories before adding transactions or schedule payments
 3. After new category is registered user can add transactions of this category type and create scheduled payments
-4. In Statistics user can view their expenses and incon in graph form 
+4. In Statistics user can view their expenses and incomes for the current month in graph form 
 
 ## Confuguration
 
@@ -52,8 +52,6 @@ This project uses MSSQL and MSSQL managment studio 18
 
  3. Entity Framework Core is used to communicate with database
 
-
-
 ## Project Features
 
 - user cannot use application without login/registration
@@ -61,3 +59,4 @@ This project uses MSSQL and MSSQL managment studio 18
 - user add categories of either Income or Expenses types
 - user can add income or expenses transactions of categories added previously 
 - user can add scheduled payments 
+- user can view their expenses and incomes for the current month in graph form 
